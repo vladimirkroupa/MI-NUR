@@ -1,6 +1,10 @@
 function NoSort() {
 }
 
+NoSort.prototype.sortsAttribute = function (attribute) {
+    return false;
+};
+
 NoSort.prototype.sort = function (itemList) {
     return itemList;
 };
@@ -9,6 +13,10 @@ NoSort.prototype.sort = function (itemList) {
 function ComparisonSort (attribute) {
     this.attribute = attribute;
 }
+
+ComparisonSort.prototype.sortsAttribute = function (attribute) {
+    return this.attribute === attribute;
+};
 
 ComparisonSort.prototype.sort = function (itemList) {
     var cmp = this.createCompare(this.attribute);
@@ -42,6 +50,10 @@ AscendingSort.prototype.compare = function (val1, val2) {
     return 0;
 };
 
+AscendingSort.prototype.addSortIndicatorClass = function (jTData) {
+    jTData.addClass('asc');
+};
+
 
 function DescendingSort (attribute) {
     this.attribute = attribute;
@@ -57,4 +69,8 @@ DescendingSort.prototype.compare = function (val1, val2) {
         return 1;
     }
     return 0;
+};
+
+DescendingSort.prototype.addSortIndicatorClass = function (jTData) {
+    jTData.addClass('desc');
 };

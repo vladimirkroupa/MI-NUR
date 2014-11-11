@@ -1,0 +1,9 @@
+th.asc:after {
+    color: blue;
+    content: '▲';
+}
+
+th.desc:after {
+    color: blue;
+    content: '▼';
+}

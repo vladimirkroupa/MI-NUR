@@ -1,5 +1,6 @@
-function ItemDefinition (attributes) {
+function ItemDefinition (attributes, defaultSort) {
     this.attributes = attributes;
+    this.defaultSort = defaultSort;
 }
 
 ItemDefinition.prototype.assertItemValuesValid = function (values) {
