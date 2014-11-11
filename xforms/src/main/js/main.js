@@ -6,7 +6,16 @@ var itemRepo = new ItemRepository();
 
 var sortOption = new DescendingSort('sid');
 
-itemTable.drawTable(jQuery('div#table'), itemDef, itemRepo.listAllItems(sortOption));
+var filteringCriteria = new FilteringCriteria(
+    [
+        new OneOfCriterion('name', ['prasopes', 'pistice', 'mildice']),
+        new ContainsTextCriterion('sid', '3')
+    ]
+);
+
+var noFiltering = new FilteringCriteria([]);
+
+itemTable.drawTable(jQuery('div#table'), itemDef, itemRepo.listAllItems(sortOption, filteringCriteria));
 
 
 
