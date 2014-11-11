@@ -37,7 +37,7 @@ ItemTable.prototype.createTableHeader = function (itemDefinition, sortOption) {
     var that = this;
     this.jQ.each(itemDefinition.getAttributesInOrder(), function (ix, attribute) {
         var jTHeader = that.jQ('<th></th>');
-        jTHeader.append(document.createTextNode(attribute));
+        jTHeader.append(document.createTextNode(attribute.getName()));
         if (sortOption.sortsAttribute(attribute)) {
             sortOption.addSortIndicatorClass(jTHeader);
         }

@@ -3,12 +3,12 @@ function ItemDefinition (attributes, defaultSort) {
     this.defaultSort = defaultSort;
 }
 
-ItemDefinition.prototype.assertItemValuesValid = function (values) {
-    if (values.length !== this.getAttributesCount()) {
-        var msg = "Item definition specifies "+ this.getAttributesCount() +" arguments , but "+ values.length +" argument values were supplied.";
-        msg += "\nSupplied arguments:";
-        for (var i = 0; i < values.length; i++) {
-            msg += "\n" + values[i]
+ItemDefinition.prototype.assertItemAttributeValuesValid = function (attributeValues) {
+    if (attributeValues.length !== this.getAttributesCount()) {
+        var msg = "Item definition specifies "+ this.getAttributesCount() +" attributes , but "+ attributeValues.length +" attribute values were supplied.";
+        msg += "\nSupplied attributes:";
+        for (var i = 0; i < attributeValues.length; i++) {
+            msg += "\n" + attributeValues[i];
         }
         throw msg;
     }

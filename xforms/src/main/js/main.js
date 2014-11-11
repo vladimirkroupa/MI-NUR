@@ -1,4 +1,7 @@
-var itemDef = new ItemDefinition(['sid', 'name', 'weight'], new AscendingSort('sid'));
+var sid = new TextAttribute('sid');
+var nameA = new TextAttribute('name');
+var weight = new IntegerAttribute('weight');
+var itemDef = new ItemDefinition([sid, nameA, weight], new AscendingSort(sid));
 
 var items = [
     new Item(itemDef, '12345', 'rumrburt', '100'),
@@ -15,8 +18,8 @@ var sortOption = itemDef.defaultSort;
 
 var filteringCriteria = new FilteringCriteria(
     [
-        new OneOfCriterion('name', ['prasopes', 'pistice', 'mildice']),
-        new ContainsTextCriterion('sid', '3')
+        new OneOfCriterion(nameA, ['prasopes', 'pistice', 'mildice']),
+        new ContainsTextCriterion(sid, '3')
     ]
 );
 

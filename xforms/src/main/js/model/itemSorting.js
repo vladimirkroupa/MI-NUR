@@ -41,13 +41,7 @@ function AscendingSort (attribute) {
 AscendingSort.prototype = new ComparisonSort();
 
 AscendingSort.prototype.compare = function (val1, val2) {
-    if (val1 > val2) {
-        return 1;
-    }
-    if (val1 < val2) {
-        return -1;
-    }
-    return 0;
+    return this.attribute.compare(val1, val2);
 };
 
 AscendingSort.prototype.addSortIndicatorClass = function (jTData) {
@@ -66,13 +60,7 @@ function DescendingSort (attribute) {
 DescendingSort.prototype = new ComparisonSort();
 
 DescendingSort.prototype.compare = function (val1, val2) {
-    if (val1 > val2) {
-        return -1;
-    }
-    if (val1 < val2) {
-        return 1;
-    }
-    return 0;
+    return - this.attribute.compare(val1, val2);
 };
 
 DescendingSort.prototype.addSortIndicatorClass = function (jTData) {
