@@ -54,6 +54,10 @@ AscendingSort.prototype.addSortIndicatorClass = function (jTData) {
     jTData.addClass('asc');
 };
 
+AscendingSort.prototype.flip = function () {
+    return new DescendingSort(this.attribute);
+};
+
 
 function DescendingSort (attribute) {
     this.attribute = attribute;
@@ -73,4 +77,8 @@ DescendingSort.prototype.compare = function (val1, val2) {
 
 DescendingSort.prototype.addSortIndicatorClass = function (jTData) {
     jTData.addClass('desc');
+};
+
+DescendingSort.prototype.flip = function () {
+    return new AscendingSort(this.attribute);
 };

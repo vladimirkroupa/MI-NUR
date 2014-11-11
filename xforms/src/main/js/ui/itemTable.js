@@ -1,18 +1,25 @@
-function ItemTable (jQuery, itemRepository, sortOption, filteringCriteria) {
+function ItemTable (jQuery, jTableContainer, itemRepository, sortOption, filteringCriteria) {
     this.jQ = jQuery;
     this.itemRepository = itemRepository;
     this.sortOption = sortOption;
     this.filteringCriteria = filteringCriteria;
+    this.jTableContainer = jTableContainer;
 }
 
 ItemTable.prototype.getItemDefinition = function () {
     return this.itemRepository.getItemDefinition();
 };
 
-ItemTable.prototype.drawTable = function (jTableContainer) {
+ItemTable.prototype.drawTable = function () {
     var items = this.itemRepository.listAllItems(this.sortOption, this.filteringCriteria);
     var jTable = this.createTable(items, this.sortOption);
-    jTable.appendTo(jTableContainer);
+
+    var jOldTable = this.jTableContainer.find('table');
+    if (jOldTable.length === 0) {
+        jTable.appendTo(this.jTableContainer);
+    } else {
+        jOldTable.replaceWith(jTable);
+    }
     return;
 };
 
@@ -29,12 +36,13 @@ ItemTable.prototype.createTableHeader = function (itemDefinition, sortOption) {
     var jTHRow = this.jQ('<tr></tr>');
     var that = this;
     this.jQ.each(itemDefinition.getAttributesInOrder(), function (ix, attribute) {
-        var jTData = that.jQ('<th></th>');
-        jTData.append(document.createTextNode(attribute));
+        var jTHeader = that.jQ('<th></th>');
+        jTHeader.append(document.createTextNode(attribute));
         if (sortOption.sortsAttribute(attribute)) {
-            sortOption.addSortIndicatorClass(jTData);
+            sortOption.addSortIndicatorClass(jTHeader);
         }
-        jTData.appendTo(jTHRow);
+        that.addSortHandler(attribute, jTHeader);
+        jTHeader.appendTo(jTHRow);
     });
     var jTHead = this.jQ('<thead></thead>');
     jTHRow.appendTo(jTHead);
@@ -61,4 +69,18 @@ ItemTable.prototype.createTableRow = function (item) {
     return jRow;
 };
 
-//ItemTable.prototype.
+ItemTable.prototype.addSortHandler = function (attribute, jTHeader) {
+    var that = this;
+    jTHeader.click(function () {
+        that.changeSortCriteria(attribute);
+        that.drawTable();
+    });
+};
+
+ItemTable.prototype.changeSortCriteria = function (newSortAttribute) {
+    if (this.sortOption.sortsAttribute(newSortAttribute)) {
+        this.sortOption = this.sortOption.flip();
+    } else {
+        this.sortOption = new AscendingSort(newSortAttribute);
+    }
+};
