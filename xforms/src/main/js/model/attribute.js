@@ -6,6 +6,10 @@ AbstractAttribute.prototype.getName = function () {
     return this.name;
 };
 
+AbstractAttribute.prototype.filterCriterias = function () {
+    return [];
+};
+
 
 function TextAttribute (name) {
     this.name = name;
@@ -21,6 +25,10 @@ TextAttribute.prototype.compare = function (textAttr1, textAttr2) {
         return -1;
     }
     return 0;
+};
+
+TextAttribute.prototype.filterCriterias = function () {
+    return [FilterEnum.containsText, FilterEnum.oneOf];
 };
 
 
@@ -41,4 +49,8 @@ IntegerAttribute.prototype.compare = function (attr1, attr2) {
         return -1;
     }
     return 0;
+};
+
+IntegerAttribute.prototype.filterCriterias = function () {
+    return [FilterEnum.oneOf];
 };

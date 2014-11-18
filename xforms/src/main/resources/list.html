@@ -5,6 +5,7 @@
     <title>XForms 3.0 prototype</title>
     <link rel="stylesheet" href="list.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+    <script src="../js/shims.js"></script>
     <script src="../js/model/itemDefinition.js"></script>
     <script src="../js/model/attribute.js"></script>
     <script src="../js/model/item.js"></script>
@@ -13,10 +14,20 @@
     <script src="../js/itemRepository.js"></script>
     <script src="../js/ui/itemTable.js"></script>
     <script src="../js/ui/sortResetButton.js"></script>
+    <script src="../js/ui/filterBuilder.js"></script>
 </head>
 <body>
     <button id="sortReset">reset sorting</button>
-    <div id="table"></div>
+    <div id="table">
+    </div>
+
+    <div id="textAttributeFilterBuilder" style="border: 1px dashed;">
+        <!--<select>-->
+            <!--<option value="contains">contains</option>-->
+            <!--<option value="startsWith">starts with</option>-->
+        <!--</select>-->
+        <!--<input type="text" name="value" value="test"></input>-->
+    </div>
 
     <script src="../js/main.js"></script>
 </body>

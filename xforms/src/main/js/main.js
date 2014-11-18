@@ -16,18 +16,24 @@ var itemDef = itemRepo.getItemDefinition();
 
 var sortOption = itemDef.defaultSort;
 
-var filteringCriteria = new FilteringCriteria(
-    [
-        new OneOfCriterion(nameA, ['prasopes', 'pistice', 'mildice']),
-        new ContainsTextCriterion(sid, '3')
-    ]
-);
+var itemTable = new ItemTable(jQuery, jQuery('div#table'), itemRepo, sortOption);
 
-var noFiltering = new FilteringCriteria([]);
+var resetButton = new SortResetButton(jQuery, jQuery('button#sortReset'));
 
-var itemTable = new ItemTable(jQuery, jQuery('div#table'), itemRepo, sortOption, filteringCriteria);
 
-new SortResetButton(jQuery);
+var textAttrFilterBuilder = new TextAttributeFilterBuilder();
+
+var textAttrFilterView = new TextAttributeFilterView(jQuery);
+textAttrFilterView.createFilterView(jQuery('div#textAttributeFilterBuilder'), textAttrFilterBuilder.setFilterType, textAttrFilterBuilder.setFilterValue);
+
+//textAttrFilterBuilder.filterChanged = function () {
+//    var filter = new textAttrFilterBuilder.buildFilter(nameA);
+//    itemTable.setAttributeFilter(nameA, filter);
+//    itemTable.drawTable();
+//};
+
+
+
 itemTable.drawTable();
 
 

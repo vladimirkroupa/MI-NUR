@@ -1,7 +1,6 @@
-function SortResetButton (jQuery) {
+function SortResetButton (jQuery, jButton) {
     this.jQ = jQuery;
 
-    var jButton = jQuery("button#sortReset");
     var that = this;
     jButton.click(function () {
         var event = that.jQ.Event("sortReset");

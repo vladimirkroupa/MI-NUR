@@ -1,27 +1,11 @@
-function FilteringCriteria (filteringCriterionList) {
-    this.criterionList = filteringCriterionList;
+function filterFromString (filterType) {
+    switch (filterType) {
+        case 'containsText':
+            return ContainsTextCriterion;
+        case 'startWithText':
+            return ContainsTextCriterion;
+    }
 }
-
-FilteringCriteria.prototype.filter = function (items) {
-    var filteredItems = [];
-    for (var i = 0; i < items.length; i++) {
-        var item = items[i];
-        if (this.matches(item)) {
-            filteredItems.push(item);
-        }
-    }
-    return filteredItems;
-};
-
-FilteringCriteria.prototype.matches = function (item) {
-    for (var i = this.criterionList.length - 1; i > 0; i--) {
-        var criterion = this.criterionList[i];
-        if (! criterion.matches(item)) {
-            return false;
-        }
-    }
-    return true;
-};
 
 
 function OneOfCriterion (attribute, acceptedValues) {
@@ -49,3 +33,17 @@ ContainsTextCriterion.prototype.matches = function (item) {
     var ttcLower = this.textToContain.toLowerCase();
     return attrValue.toLowerCase().indexOf(ttcLower) > -1;
 };
+
+
+function RangeCriterion (attribute, lowerEndpoint, upperEndpoint) {
+    this.attribute = attribute;
+    this.loEnd = lowerEndpoint;
+    this.upEnd = upperEndpoint;
+}
+
+OneOfCriterion.prototype.matches = function (item) {
+    var attrValue = item.getValue(this.attribute);
+    var intValue = parseInt(attrValue);
+    // TODO
+};
+

@@ -1,9 +1,21 @@
-th.asc:after {
+span.header {
+    cursor: pointer;
+}
+
+span.filter {
+    cursor: pointer;
+}
+
+span.header {
+    cursor: pointer;
+}
+
+th span.sort.asc:before {
     color: blue;
     content: '▲';
 }
 
-th.desc:after {
+th span.sort.desc:before {
     color: blue;
     content: '▼';
 }

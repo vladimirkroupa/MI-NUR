@@ -1,18 +1,22 @@
-function ItemTable (jQuery, jTableContainer, itemRepository, defaultSortOption, filteringCriteria) {
+function ItemTable (jQuery, jTableContainer, itemRepository, defaultSortOption) {
     this.jQ = jQuery;
     this.itemRepository = itemRepository;
     this.defaultSortOption = defaultSortOption;
     this.sortOption = defaultSortOption;
-    this.filteringCriteria = filteringCriteria;
+    this.filteringCriteriaMap = {};
     this.jTableContainer = jTableContainer;
 }
+
+ItemTable.prototype.setAttributeFilter = function (attribute, filter) {
+    this.filteringCriteriaMap[attribute] = filter;
+};
 
 ItemTable.prototype.getItemDefinition = function () {
     return this.itemRepository.getItemDefinition();
 };
 
 ItemTable.prototype.drawTable = function () {
-    var items = this.itemRepository.listAllItems(this.sortOption, this.filteringCriteria);
+    var items = this.itemRepository.listAllItems(this.sortOption, Object.values(this.filteringCriteriaMap));
     var jTable = this.createTable(items, this.sortOption);
 
     var jOldTable = this.jTableContainer.find('table');
@@ -26,23 +30,28 @@ ItemTable.prototype.drawTable = function () {
 
 ItemTable.prototype.createTable = function (items) {
     var jTable = this.jQ('<table></table>');
-    var jTHead = this.createTableHeader(this.getItemDefinition(), this.sortOption);
+    var jTHead = this.createTableHead(this.getItemDefinition(), this.sortOption);
     var jTBody = this.createTableBody(items);
     jTHead.appendTo(jTable);
     jTBody.appendTo(jTable);
     return jTable;
 };
 
-ItemTable.prototype.createTableHeader = function (itemDefinition, sortOption) {
+ItemTable.prototype.createTableHead = function (itemDefinition, sortOption) {
     var jTHRow = this.jQ('<tr></tr>');
     var that = this;
     this.jQ.each(itemDefinition.getAttributesInOrder(), function (ix, attribute) {
         var jTHeader = that.jQ('<th></th>');
-        jTHeader.append(document.createTextNode(attribute.getName()));
+
+        var sorting = that.jQ('<span class="sort"></span>').appendTo(jTHeader);
+        var headerTxt = document.createTextNode(attribute.getName());
+        var headerSpan = that.jQ('<span class="header"></span>').appendTo(jTHeader);
+        headerSpan.append(headerTxt);
+        var filtering = that.jQ('<span class="filter">⋮</span>').appendTo(jTHeader);
         if (sortOption.sortsAttribute(attribute)) {
-            sortOption.addSortIndicatorClass(jTHeader);
+            sortOption.addSortIndicatorClass(sorting);
         }
-        that.addSortHandlers(attribute, jTHeader);
+        that.addSortHandlers(attribute, headerSpan);
         jTHeader.appendTo(jTHRow);
     });
     var jTHead = this.jQ('<thead></thead>');
@@ -70,15 +79,10 @@ ItemTable.prototype.createTableRow = function (item) {
     return jRow;
 };
 
-ItemTable.prototype.addSortHandlers = function (attribute, jTHeader) {
+ItemTable.prototype.addSortHandlers = function (attribute, jElem) {
     var that = this;
-    jTHeader.click(function () {
+    jElem.click(function () {
         that.changeSortCriteria(attribute);
-
-        var event = that.jQ.Event("sortingChanged");
-        event.sortAttribute = attribute.name;
-        that.jTableContainer.trigger(event);
-
         that.drawTable();
     });
 
@@ -99,3 +103,5 @@ ItemTable.prototype.changeSortCriteria = function (newSortAttribute) {
         this.sortOption = new AscendingSort(newSortAttribute);
     }
 };
+
+ItemTable.prototype
