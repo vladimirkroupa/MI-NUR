@@ -27,6 +27,7 @@ var noFiltering = new FilteringCriteria([]);
 
 var itemTable = new ItemTable(jQuery, jQuery('div#table'), itemRepo, sortOption, filteringCriteria);
 
+new SortResetButton(jQuery);
 itemTable.drawTable();
 
 
