@@ -21,17 +21,18 @@ var itemTable = new ItemTable(jQuery, jQuery('div#table'), itemRepo, sortOption)
 var resetButton = new SortResetButton(jQuery, jQuery('button#sortReset'));
 
 
-var textAttrFilterBuilder = new TextAttributeFilterBuilder();
+var attributes = itemDef.getAttributesInOrder();
+for (var i = 0; i < attributes.length; i++) {
+    var attribute = attributes[i];
 
-var textAttrFilterView = new TextAttributeFilterView(jQuery);
-textAttrFilterView.createFilterView(jQuery('div#textAttributeFilterBuilder'), textAttrFilterBuilder.setFilterType, textAttrFilterBuilder.setFilterValue);
+    var jFilterContainer = jQuery('<div></div>');
+    var filterViewCF = attribute.filterViewCF();
+    var filterView = new filterViewCF(jQuery, jFilterContainer, attribute);
+    filterView.registerListener(itemTable);
+    itemRepo.registerFilter(filterView.getFilter());
 
-//textAttrFilterBuilder.filterChanged = function () {
-//    var filter = new textAttrFilterBuilder.buildFilter(nameA);
-//    itemTable.setAttributeFilter(nameA, filter);
-//    itemTable.drawTable();
-//};
-
+    jFilterContainer.appendTo(jQuery('div#filters'));
+}
 
 
 itemTable.drawTable();

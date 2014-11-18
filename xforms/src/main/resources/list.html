@@ -9,24 +9,22 @@
     <script src="../js/model/itemDefinition.js"></script>
     <script src="../js/model/attribute.js"></script>
     <script src="../js/model/item.js"></script>
-    <script src="../js/model/itemFiltering.js"></script>
+    <script src="../js/model/filter/itemFiltering.js"></script>
+    <script src="../js/model/filter/filter.js"></script>
+    <script src="../js/model/filter/containsTextFilter.js"></script>
+    <script src="../js/model/filter/oneOfFilter.js"></script>
     <script src="../js/model/itemSorting.js"></script>
     <script src="../js/itemRepository.js"></script>
     <script src="../js/ui/itemTable.js"></script>
     <script src="../js/ui/sortResetButton.js"></script>
-    <script src="../js/ui/filterBuilder.js"></script>
+    <script src="../js/ui/ContainsTextFilterView.js"></script>
 </head>
 <body>
     <button id="sortReset">reset sorting</button>
     <div id="table">
     </div>
 
-    <div id="textAttributeFilterBuilder" style="border: 1px dashed;">
-        <!--<select>-->
-            <!--<option value="contains">contains</option>-->
-            <!--<option value="startsWith">starts with</option>-->
-        <!--</select>-->
-        <!--<input type="text" name="value" value="test"></input>-->
+    <div id="filters" style="border: 1px dashed;">
     </div>
 
     <script src="../js/main.js"></script>

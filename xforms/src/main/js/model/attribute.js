@@ -27,8 +27,8 @@ TextAttribute.prototype.compare = function (textAttr1, textAttr2) {
     return 0;
 };
 
-TextAttribute.prototype.filterCriterias = function () {
-    return [FilterEnum.containsText, FilterEnum.oneOf];
+TextAttribute.prototype.filterViewCF = function () {
+    return ContainsTextFilterView;
 };
 
 
@@ -51,6 +51,6 @@ IntegerAttribute.prototype.compare = function (attr1, attr2) {
     return 0;
 };
 
-IntegerAttribute.prototype.filterCriterias = function () {
-    return [FilterEnum.oneOf];
+IntegerAttribute.prototype.filterViewCF = function () {
+    return ContainsTextFilterView;
 };

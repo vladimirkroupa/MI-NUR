@@ -104,4 +104,6 @@ ItemTable.prototype.changeSortCriteria = function (newSortAttribute) {
     }
 };
 
-ItemTable.prototype
+ItemTable.prototype.notify = function () {
+    this.drawTable();
+};
