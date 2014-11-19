@@ -3,7 +3,7 @@ function ContainsTextFilterView (jQuery, jContainer, attribute) {
     this.filter = new ContainsFilter(jQuery, attribute);
     this.listeners = [];
 
-    var jLabel = this.jQ('<label>'+ attribute.name +' contains text:</label>');
+    var jLabel = this.jQ('<label>contains text:</label>');
     var jInput = this.jQ('<input type="text" name="value"></input>');
     jInput.appendTo(jLabel);
     jLabel.appendTo(jContainer);

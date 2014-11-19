@@ -41,13 +41,20 @@ ItemTable.prototype.createTableHead = function (itemDefinition, sortOption) {
     var jTHRow = this.jQ('<tr></tr>');
     var that = this;
     this.jQ.each(itemDefinition.getAttributesInOrder(), function (ix, attribute) {
+        var jDialog = that.initFilterDialog(attribute, jFiltering);
+
         var jTHeader = that.jQ('<th></th>');
 
         var sorting = that.jQ('<span class="sort"></span>').appendTo(jTHeader);
         var headerTxt = document.createTextNode(attribute.getName());
         var headerSpan = that.jQ('<span class="header"></span>').appendTo(jTHeader);
         headerSpan.append(headerTxt);
-        var filtering = that.jQ('<span class="filter">⋮</span>').appendTo(jTHeader);
+        var jFiltering = that.jQ('<span class="filter">⋮</span>');
+
+        jFiltering.click(function () {
+            jDialog.show();
+        });
+        jFiltering.appendTo(jTHeader);
         if (sortOption.sortsAttribute(attribute)) {
             sortOption.addSortIndicatorClass(sorting);
         }
@@ -102,6 +109,20 @@ ItemTable.prototype.changeSortCriteria = function (newSortAttribute) {
     } else {
         this.sortOption = new AscendingSort(newSortAttribute);
     }
+};
+
+ItemTable.prototype.initFilterDialog = function (attribute, jDialogButton) {
+    var dialog = new FilterDialog(this.jQ, attribute.name);
+    var jDialogDiv = dialog.getDialogContainer();
+
+    var filterViewCF = attribute.filterViewCF();
+    var filterView = new filterViewCF(this.jQ, jDialogDiv, attribute);
+    filterView.registerListener(itemTable);
+    itemRepo.registerFilter(filterView.getFilter());
+
+    jDialogDiv.appendTo(this.jQ('div#filters'));
+    jDialogDiv.hide();
+    return jDialogDiv;
 };
 
 ItemTable.prototype.notify = function () {
