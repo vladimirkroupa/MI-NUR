@@ -24,6 +24,8 @@ function FilterDialog (jQuery, headerText) {
     jHeader.appendTo(this.jDialogDiv);
 
     var jContentDiv = this.jQ('<div class="dialog_content"></div>');
+
+    Positioner.centerPositioning(this.jDialogDiv[0], FilterDialog.DIALOG_WIDTH, FilterDialog.DIALOG_HEIGHT);
     jContentDiv.appendTo(this.jDialogDiv);
 }
 
